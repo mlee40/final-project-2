@@ -1,6 +1,5 @@
 import gifAnimation.*;
-import processing.sound.*;
-SoundFile file;
+
 PVector vel = new PVector(0,0);
 PVector pos = new PVector(0,0);
 PVector acc = new PVector(0,0);
@@ -11,7 +10,7 @@ boolean got_c1, got_c2, got_c3;
 boolean up = false;
 PImage img;
 int bgx, bgy;
-int speed = 10;
+int speed = 5;
 
 int mode = 0;
 int score = 0;
@@ -21,6 +20,17 @@ boolean play = false;
 
 void setup(){
   size(800,600);
+  //reset();
+  pos = new PVector(30,height-101);
+  img = loadImage("platform32.png");
+  animation = new Gif(this, "coin.gif");
+  animation.play();
+  coin1 = new PVector(4640,150);
+  /*image(img,bgx,bgy);
+  vel.x = 5;
+  avatar();
+  vel.add(acc);
+  pos.add(vel);*/
 }
 void draw(){
   if(mode == 0){
@@ -91,9 +101,6 @@ void menuPage(){
   text("PLAY",width/2-50,height/2+100);
 }
 void reset(){
-  boolean got_c1 = false;
-  boolean got_c2 = false;
-  boolean got_c3 = false;
   pos = new PVector(30,height-101);
   img = loadImage("platform32.png");
   animation = new Gif(this, "coin.gif");
@@ -101,25 +108,25 @@ void reset(){
   coin1 = new PVector(4640,150);
 }
 void play(){
-  reset();
   image(img,bgx,bgy);
-  //System.out.println(pos.x);
   avatar();
   vel.add(acc);
   pos.add(vel);
+  //System.out.println(pos.x);
   // moving background and avatar
   if(pos.x <= 250){
     vel.x = 5;
-    System.out.println("test");
+    //System.out.println("test");
   }
   else{
     if(bgx-width == -7150){
-      pos.x += 5;
+      vel.x = 5;
       speed = 0;
       bgx = -7150+width;
     }
     else{
       bgx -= speed;
+      vel.x = 0;
     }
   }
 
